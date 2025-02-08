@@ -12,14 +12,12 @@ export const getBorderChildren = <T extends HTMLElement>(
         const child = childrens[i] as HTMLElement
         const position = positionChildToParent(box, child)
         let isBorder: boolean = false
-        if (position.height + position.top < position.parentHeight - 1) {
+        child.classList.remove('border-b', 'border-r')
+        if (position.top >= 0 && position.bottom > 1) {
             isBorder = true
             child.classList.add('border-b')
         }
-        if (
-            position.left >= 0 &&
-            position.width + position.left < position.parentWidth - 1
-        ) {
+        if (position.left >= 0 && position.right > 1) {
             isBorder = true
             child.classList.add('border-r')
         }
