@@ -32,13 +32,19 @@ const useBorder = <T extends HTMLElement>(boxRef: RefObject<T | null>) => {
     useLayoutEffect(() => {
         if (boxRef.current) {
             getBorderChildren<T>(boxRef.current)
-            window.addEventListener('resize', () => getBorderChildren<T>(boxRef!.current!))
+            window.addEventListener(
+                'resize', 
+                () => getBorderChildren<T>(boxRef!.current!)
+            )
         }
 
         return () => {
             if (boxRef.current) {
                 getBorderChildren<T>(boxRef.current)
-                window.removeEventListener('resize', () => getBorderChildren<T>(boxRef!.current!))
+                window.removeEventListener(
+                    'resize', 
+                    () => getBorderChildren<T>(boxRef!.current!)
+                )
             }
         }
     }, [])
