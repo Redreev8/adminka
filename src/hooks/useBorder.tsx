@@ -2,7 +2,10 @@
 import positionChildToParent from '@/helper/position-child-to-parent'
 import { RefObject, useLayoutEffect } from 'react'
 
-export const getBorderChildren = <T extends HTMLElement>(box: T) => {
+export const getBorderChildren = <T extends HTMLElement>(
+    box: T,
+    classNames: string[] = [],
+) => {
     const childrens = box.children
     if (!childrens || childrens.length === 0) return
     for (let i = 0; i < childrens.length; i++) {
@@ -14,36 +17,33 @@ export const getBorderChildren = <T extends HTMLElement>(box: T) => {
             child.classList.add('border-b')
         }
         if (
-            position.left > 0 &&
+            position.left >= 0 &&
             position.width + position.left < position.parentWidth - 1
         ) {
             isBorder = true
             child.classList.add('border-r')
         }
-        if (i === 2) {
-            console.log(position.width + position.left)
-            console.log(position.parentWidth + 1)
-        }
-        if (isBorder) child.classList.add('border-label')
+        if (isBorder) child.classList.add('border-label', ...classNames)
     }
 }
 
-const useBorder = <T extends HTMLElement>(boxRef: RefObject<T | null>) => {
+const useBorder = <T extends HTMLElement>(
+    boxRef: RefObject<T | null>,
+    classNames: string[] = [],
+) => {
     useLayoutEffect(() => {
         if (boxRef.current) {
             getBorderChildren<T>(boxRef.current)
-            window.addEventListener(
-                'resize', 
-                () => getBorderChildren<T>(boxRef!.current!)
+            window.addEventListener('resize', () =>
+                getBorderChildren<T>(boxRef!.current!, classNames),
             )
         }
 
         return () => {
             if (boxRef.current) {
                 getBorderChildren<T>(boxRef.current)
-                window.removeEventListener(
-                    'resize', 
-                    () => getBorderChildren<T>(boxRef!.current!)
+                window.removeEventListener('resize', () =>
+                    getBorderChildren<T>(boxRef!.current!, classNames),
                 )
             }
         }
