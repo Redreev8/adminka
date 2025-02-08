@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Jura } from 'next/font/google'
 import './globals.css'
 
-const sans = Jura({
-    variable: '--font-sans',
-    subsets: ['latin'],
+const bodyFont = Jura({
+    variable: '--font-body',
+    subsets: ['cyrillic', 'latin'],
 })
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${sans.variable} antialiased`}>
+            <body className={`${bodyFont.variable} font-body antialiased`}>
                 <main>{children}</main>
             </body>
         </html>

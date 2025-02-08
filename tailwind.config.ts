@@ -15,6 +15,9 @@ export default {
         label: "var(--label)",
         black: "var(--black)",
       },
+      fontFamily: {
+        body: ['var(--font-body)']
+      }
     },
   },
   plugins: [],
