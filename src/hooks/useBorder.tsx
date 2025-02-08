@@ -23,7 +23,9 @@ export const getBorderChildren = <T extends HTMLElement>(
             isBorder = true
             child.classList.add('border-r')
         }
-        if (isBorder) child.classList.add('border-label', ...classNames)
+        if (isBorder) child.classList.add('border-label')
+        if ('border' in child.dataset) continue
+        child.classList.add('border-label', ...classNames)
     }
 }
 
@@ -33,7 +35,7 @@ const useBorder = <T extends HTMLElement>(
 ) => {
     useLayoutEffect(() => {
         if (boxRef.current) {
-            getBorderChildren<T>(boxRef.current)
+            getBorderChildren<T>(boxRef.current, classNames)
             window.addEventListener('resize', () =>
                 getBorderChildren<T>(boxRef!.current!, classNames),
             )
