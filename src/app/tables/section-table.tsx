@@ -1,0 +1,37 @@
+import { TableDesc } from '@/actions/tables/dto/table'
+import Container from '@/components/ui/container'
+import Section from '@/components/ui/section'
+import Title, { TitleProps } from '@/components/ui/title'
+import React, { FC } from 'react'
+import CardTable from './card-table'
+import ListBorder from '@/components/ui/list-border'
+const id = 'section-table'
+
+interface SectionTableProps {
+    tables: TableDesc[]
+    as?: 1 | 2
+}
+
+const SectionTable: FC<SectionTableProps> = ({ tables, as = 2 }) => {
+    return (
+        <Section aria-labelledby={id}>
+            <Container className="flex flex-col">
+                <Title as={as} id={id}>
+                    Tables
+                </Title>
+                <ListBorder className="grid-cols grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {tables.map((t, i) => (
+                        <CardTable
+                            as={(+as + 1) as TitleProps['as']}
+                            {...t}
+                            key={t.name}
+                            className={i === 1 ? 'row-span-2' : ''}
+                        />
+                    ))}
+                </ListBorder>
+            </Container>
+        </Section>
+    )
+}
+
+export default SectionTable

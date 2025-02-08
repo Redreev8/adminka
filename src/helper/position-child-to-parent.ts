@@ -1,4 +1,4 @@
-'use client' 
+'use client'
 
 const positionChildToParent = (parent: HTMLElement, child: HTMLElement) => {
     const parentPos = parent.getBoundingClientRect()
