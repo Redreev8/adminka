@@ -11,9 +11,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "var(--bg)",
+        white: "var(--white)",
         label: "var(--label)",
-        text: "var(--text)",
+        black: "var(--black)",
       },
     },
   },

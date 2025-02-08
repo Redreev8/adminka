@@ -1,13 +1,13 @@
 import { TableDesc } from '@/actions/tables/dto/table'
 import Container from '@/components/ui/container'
-import Section from '@/components/ui/section'
+import Section, { SectionProps } from '@/components/ui/section'
 import Title, { TitleProps } from '@/components/ui/title'
 import React, { FC } from 'react'
 import CardTable from './card-table'
 import ListBorder from '@/components/ui/list-border'
 const id = 'section-table'
 
-interface SectionTableProps {
+interface SectionTableProps extends SectionProps {
     tables: TableDesc[]
     as?: 1 | 2
 }

@@ -5,7 +5,7 @@ const Tables = async () => {
     const tables = await findTableDesc()
     if (!Array.isArray(tables)) return Error
 
-    return <SectionTable tables={tables} />
+    return  <SectionTable tables={tables} />
 }
 
 export default Tables

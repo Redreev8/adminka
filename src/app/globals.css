@@ -3,13 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --bg: #fffff0;
-  --text: #130417;
+  --white: #fffff0;
+  --black: #130417;
   --label: rgba(19, 4, 23, .2);
+  --label-darck: rgba(255, 255, 240, .2);
 }
 
 body {
-  color: var(--text);
-  background-color: var(--bg);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+
+section[data-theme='dark'] {
+  color: var(--white);
+  background-color: var(--black);
+}
+.border-label[data-theme='dark'], 
+section[data-theme='dark'] * {
+  border-color: var(--label-darck);
 }

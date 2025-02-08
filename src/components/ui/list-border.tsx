@@ -4,15 +4,19 @@ import useBorder from '@/hooks/useBorder'
 import useUniteRef from '@/hooks/useUniteRef'
 import { AreaHTMLAttributes, Children, forwardRef } from 'react'
 
+export interface ListBorder extends AreaHTMLAttributes<HTMLUListElement>  {
+    classNameItem?: string[]
+}
+
 const ListBorder = forwardRef<
     HTMLUListElement,
-    AreaHTMLAttributes<HTMLUListElement>
->(({ className, children, ...props }, ref) => {
+    ListBorder
+>(({ className, children, classNameItem, ...props }, ref) => {
     const refList = useUniteRef<HTMLUListElement>(ref)
-    useBorder(refList)
+    useBorder(refList, classNameItem)
 
     return (
-        <ul className={className} {...props} ref={refList}>
+        <ul className={className} {...props} ref={refList} data-border>
             {Children.map(children, (child, i) => (
                 <li key={i}>{child}</li>
             ))}

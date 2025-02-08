@@ -17,7 +17,7 @@ const Container = forwardRef<
         'border-x border-b border-label',
     )
     const refContainer = useUniteRef<HTMLDivElement>(ref)
-    useBorder(refContainer, [clCardPadding])
+    useBorder(refContainer, clCardPadding.split(' '))
     return (
         <div className={cl} ref={refContainer} {...props}>
             {children}
