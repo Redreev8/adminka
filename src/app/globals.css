@@ -7,13 +7,15 @@
   --black: #130417;
   --label: rgba(19, 4, 23, .2);
   --label-darck: rgba(255, 255, 240, .2);
+  --yellow: #ffea7f;
+  --red: #ff6685;
+  --green: #5ce5e2;
 }
 
 body {
   color: var(--black);
   background-color: var(--white);
 }
-
 
 section[data-theme='dark'] {
   color: var(--white);

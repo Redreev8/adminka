@@ -14,6 +14,9 @@ export default {
         white: "var(--white)",
         label: "var(--label)",
         black: "var(--black)",
+        yellow: "var(--yellow)",
+        red: "var(--red)",
+        green: "var(--green)",
       },
       fontFamily: {
         body: ['var(--font-body)']
