@@ -14,18 +14,18 @@ interface SectionTableProps extends SectionProps {
 
 const SectionTable: FC<SectionTableProps> = ({ tables, as = 2 }) => {
     return (
-        <Section aria-labelledby={id}>
+        <Section className="min-h-screen" aria-labelledby={id}>
             <Container className="flex flex-col">
                 <Title as={as} id={id}>
                     Tables
                 </Title>
                 <ListBorder className="grid-cols grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {tables.map((t, i) => (
+                    {tables.map((t) => (
                         <CardTable
                             as={(+as + 1) as TitleProps['as']}
                             {...t}
                             key={t.name}
-                            className={i === 1 ? 'row-span-2' : ''}
+                            className="h-full"
                         />
                     ))}
                 </ListBorder>

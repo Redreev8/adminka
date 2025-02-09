@@ -2,6 +2,7 @@ import { TableDesc } from '@/actions/tables/dto/table'
 import Btn from '@/components/ui/btn'
 import Card from '@/components/ui/card'
 import Title, { TitleProps } from '@/components/ui/title'
+import classNames from 'classnames'
 import React, { AreaHTMLAttributes, forwardRef } from 'react'
 
 export interface CardTableProps
@@ -11,14 +12,27 @@ export interface CardTableProps
 }
 
 const CardTable = forwardRef<HTMLDivElement, CardTableProps>(
-    ({ name, as, desc, ...props }, ref) => {
+    ({ name, as, desc, className, ...props }, ref) => {
+        const cl = classNames(
+            className,
+            'flex flex-col justify-between min-h-[280px]',
+        )
         return (
-            <Card ref={ref} {...props}>
-                <Title size={4} as={as}>
-                    {desc.name.length > 0 ? desc.name : name}
-                </Title>
-                {desc.desc.length > 0 && <p>{desc.desc}</p>}
-                <Btn iconLeft='EditIcon' className='mt-auto'>Изменить</Btn>
+            <Card className={cl} ref={ref} {...props}>
+                <div>
+                    <Title size={4} as={as}>
+                        {desc.name.length > 0 ? desc.name : name}
+                    </Title>
+                    {desc.desc.length > 0 && <p>{desc.desc}</p>}
+                </div>
+                <ul className="flex gap-2">
+                    <li>
+                        <Btn color="green" isOutline iconLeft="EditIcon" />
+                    </li>
+                    <li>
+                        <Btn color="red" isOutline iconRight="TrashIcon" />
+                    </li>
+                </ul>
             </Card>
         )
     },
