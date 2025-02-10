@@ -37,8 +37,9 @@ const Btn = forwardRef<HTMLAnchorElement | HTMLButtonElement, BtnProps>(
         const cl = classNames(
             className,
             'flex items-center justify-center gap-2',
-            `rounded-lg hover:rounded-full font-body border-2`,
-            'transition-[border-radius] duration-[3000ms]',
+            'rounded-lg hover:rounded-[60px] font-body border-2',
+            'active:opacity-60',
+            'transition-[border-radius, opacity] duration-300',
             {
                 'py-2 px-4': !iconLeft && !iconRight,
                 'py-2': iconLeft || iconRight,
