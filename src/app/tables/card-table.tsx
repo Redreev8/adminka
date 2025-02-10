@@ -27,10 +27,10 @@ const CardTable = forwardRef<HTMLDivElement, CardTableProps>(
                 </div>
                 <ul className="flex gap-2">
                     <li>
-                        <Btn color="green" isOutline iconLeft="EditIcon" />
+                        <Btn isOutline iconLeft="EditIcon" />
                     </li>
                     <li>
-                        <Btn color="red" isOutline iconRight="TrashIcon" />
+                        <Btn isOutline iconRight="TrashIcon" />
                     </li>
                 </ul>
             </Card>
