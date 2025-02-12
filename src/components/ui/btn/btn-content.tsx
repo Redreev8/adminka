@@ -21,7 +21,10 @@ const BtnContent: FC<BtnContentProps> = ({
             children,
         'text-black': isOutline || children,
     })
-    const clIcon = classNames('size-5')
+    const clIcon = classNames({
+        'size-5': !isOutline || !children,
+        'size-6': isOutline || !children,
+    })
     return (
         <>
             {iconLeft && (
