@@ -5,8 +5,7 @@ const Fieldset = forwardRef<
     HTMLFieldSetElement,
     FieldsetHTMLAttributes<HTMLFieldSetElement>
 >(({ className, children, ...props }, ref) => {
-    const cl = classNames(className)
-
+    const cl = classNames(className, 'relative')
     return (
         <fieldset className={cl} {...props} ref={ref}>
             {children}
