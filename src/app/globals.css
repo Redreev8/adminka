@@ -25,3 +25,14 @@ section[data-theme='dark'] {
 section[data-theme='dark'] * {
   border-color: var(--label-darck);
 }
+
+fieldset {
+  margin-inline: 0;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+legend {
+  transform: translateY(-.8rem);
+  padding-left: inherit;
+}
