@@ -1,5 +1,5 @@
 import findTableDesc from '@/actions/tables/find-table'
-import SectionTable from './section-table'
+import SectionTable from './ui/section-table'
 
 const Tables = async () => {
     const tables = await findTableDesc()
