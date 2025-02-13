@@ -73,8 +73,9 @@ const Btn = forwardRef<HTMLAnchorElement | HTMLButtonElement, BtnProps>(
         if (href) {
             return (
                 <Link
+                    href={href}
                     className={cl}
-                    {...(props as LinkProps)}
+                    {...(props as Omit<LinkProps, 'href'>)}
                     ref={ref as ForwardedRef<HTMLAnchorElement>}
                 >
                     {Content}

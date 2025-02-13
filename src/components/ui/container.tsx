@@ -2,16 +2,8 @@
 import useBorder from '@/components/ui/hooks/useBorder'
 import useUniteRef from '@/hooks/useUniteRef'
 import classNames from 'classnames'
-import {
-    AreaHTMLAttributes,
-    Children,
-    cloneElement,
-    forwardRef,
-    isValidElement,
-    ReactElement,
-    ReactNode,
-} from 'react'
-import { clCardPadding } from './card'
+import { AreaHTMLAttributes, Children, forwardRef } from 'react'
+import getConteintCardItem from './helper/get-content-card-items'
 
 export interface ContainerSettings {
     isBorder?: boolean
@@ -30,20 +22,10 @@ const Container = forwardRef<
     )
     const refContainer = useUniteRef<HTMLDivElement>(ref)
     useBorder(refContainer)
-    const getConteint = (child: ReactNode) => {
-        if (!child) return
-        if (!isValidElement(child))
-            return <div className={clCardPadding}>{child}</div>
-        const { className, ...props } = child.props as { className?: string }
-        const cl = classNames(className, clCardPadding)
-        return cloneElement(child as ReactElement<{ className?: string }>, {
-            ...props,
-            className: cl!,
-        })
-    }
+
     return (
         <div className={cl} ref={refContainer} {...props}>
-            {Children.map(children, getConteint)}
+            {Children.map(children, (child) => getConteintCardItem(child))}
         </div>
     )
 })
