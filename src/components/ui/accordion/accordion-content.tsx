@@ -12,7 +12,7 @@ const AccordionContent: FC<AccordionContentProps> = ({
     className,
     ...props
 }) => {
-    const isOpen = useContext(AccordionContext)[0]
+    const { refDiv, isOpen } = useContext(AccordionContext)
     const cl = classNames(
         'grid grid-rows-[0fr] overflow-hidden',
         'transition[grid-template-rows] duration-300',
@@ -23,7 +23,7 @@ const AccordionContent: FC<AccordionContentProps> = ({
     )
 
     return (
-        <div className={cl} aria-hidden={!isOpen} {...props}>
+        <div className={cl} aria-hidden={!isOpen} ref={refDiv} {...props}>
             <div className="min-h-0">{children}</div>
         </div>
     )

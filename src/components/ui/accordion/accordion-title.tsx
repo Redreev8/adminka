@@ -20,7 +20,7 @@ const AccordionTitle: FC<AccordionTitleProps> = ({
     children,
     ariaLabel = defultAriaLabel,
 }) => {
-    const [isOpen, toggle] = useContext(AccordionContext)
+    const { isOpen, toggle } = useContext(AccordionContext)
     const { onClick, className, ...props } = children.props
     const cl = classNames(className, 'cursor-pointer w-full')
     const handelClick = (e: Event) => {
@@ -30,7 +30,7 @@ const AccordionTitle: FC<AccordionTitleProps> = ({
     return cloneElement(children, {
         ...props,
         className: cl,
-        ariaLabel: ariaLabel[isOpen ? 'close' : 'open'],
+        'aria-label': ariaLabel[isOpen ? 'close' : 'open'],
         onClick: handelClick,
     })
 }
