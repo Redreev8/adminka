@@ -13,10 +13,10 @@ export interface AccordionContextItems {
     toggle: () => void
 }
 
-export const AccordionContext = createContext<AccordionContextItems>({ 
+export const AccordionContext = createContext<AccordionContextItems>({
     refDiv: { current: null },
-    isOpen: true, 
-    toggle: () => {}
+    isOpen: true,
+    toggle: () => {},
 })
 
 const Accordion: FC<AccordionProps> = ({ children, isActive = false }) => {

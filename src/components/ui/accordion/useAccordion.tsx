@@ -4,7 +4,9 @@ import { useContext, useEffect, useRef } from 'react'
 import { AccordionListContext } from './accordion-list'
 import { AccordionContextItems, AccordionProps } from './accordion'
 
-const useAccordion = (isActive: AccordionProps['isActive']): AccordionContextItems => {
+const useAccordion = (
+    isActive: AccordionProps['isActive'],
+): AccordionContextItems => {
     const { itemsActive, push, remove } = useContext(AccordionListContext)
     const [value, toggle] = useBoolean(isActive)
     const refDiv = useRef<HTMLDivElement>(null)
