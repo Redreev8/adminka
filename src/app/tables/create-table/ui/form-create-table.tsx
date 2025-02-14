@@ -1,10 +1,6 @@
 'use client'
 import { TableDesc } from '@/actions/tables/dto/table'
-import Form, {
-    Label,
-    Input,
-    Error,
-} from '@/components/ui/forms'
+import Form, { Label, Input, Error } from '@/components/ui/forms'
 import { useForm } from 'react-hook-form'
 import FieldsetCreateTableDesc from './fieldset-create-table-desc'
 import FieldsetCreateTableColumns from './fieldset-create-table-columns'
