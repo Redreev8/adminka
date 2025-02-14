@@ -23,7 +23,7 @@ const AccordionContent: FC<AccordionContentProps> = ({
     )
 
     return (
-        <div className={cl} {...props}>
+        <div className={cl} aria-hidden={!isOpen} {...props}>
             <div className="min-h-0">{children}</div>
         </div>
     )

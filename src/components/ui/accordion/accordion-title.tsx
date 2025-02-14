@@ -5,10 +5,22 @@ import classNames from 'classnames'
 
 interface AccordionTitleProps {
     children: JSX.Element
+    ariaLabel?: {
+        close: ''
+        open: ''
+    }
 }
 
-const AccordionTitle: FC<AccordionTitleProps> = ({ children }) => {
-    const toggle = useContext(AccordionContext)[1]
+const defultAriaLabel = {
+    close: 'Close content',
+    open: 'Open content',
+}
+
+const AccordionTitle: FC<AccordionTitleProps> = ({
+    children,
+    ariaLabel = defultAriaLabel,
+}) => {
+    const [isOpen, toggle] = useContext(AccordionContext)
     const { onClick, className, ...props } = children.props
     const cl = classNames(className, 'cursor-pointer w-full')
     const handelClick = (e: Event) => {
@@ -18,6 +30,7 @@ const AccordionTitle: FC<AccordionTitleProps> = ({ children }) => {
     return cloneElement(children, {
         ...props,
         className: cl,
+        ariaLabel: ariaLabel[isOpen ? 'close' : 'open'],
         onClick: handelClick,
     })
 }

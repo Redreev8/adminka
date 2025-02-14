@@ -12,10 +12,7 @@ export const AccordionContext = createContext<UseBooleanReturn>([
     () => {},
 ])
 
-const Accordion: FC<AccordionProps> = ({
-    children,
-    isActive = false,
-}) => {
+const Accordion: FC<AccordionProps> = ({ children, isActive = false }) => {
     const [value, toggle] = useBoolean(isActive)
     return (
         <AccordionContext.Provider value={[value, toggle]}>
