@@ -9,7 +9,7 @@ const useUniteRef = <T extends HTMLElement>(ref: ForwardedRef<T | null>) => {
         if (typeof ref === 'object') {
             ref = refStart
         }
-    }, [])
+    }, [refStart.current])
     return refStart
 }
 
