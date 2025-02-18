@@ -14,7 +14,8 @@ const SelectBtn = forwardRef<
     HTMLButtonElement,
     ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, className, onClick, onBlur, ...props }, ref) => {
-    const { refBtn, items, selected, setIsOpen } = useContext(SelectContext)
+    const { refBtn, refSelect, items, selected, setIsOpen } =
+        useContext(SelectContext)
     const cl = classNames(
         className,
         'h-[33px] text-left w-full border-l border-b border-black rounded-bl-lg pl-2 pb-2',
@@ -28,6 +29,7 @@ const SelectBtn = forwardRef<
     }
     const handelBlur = (e: FocusEvent<HTMLButtonElement>) => {
         setIsOpen(() => false)
+        refSelect.current?.focus()
         if (onBlur) onBlur(e)
     }
     const getContent = () => {

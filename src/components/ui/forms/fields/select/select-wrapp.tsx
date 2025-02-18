@@ -1,16 +1,22 @@
 import classNames from 'classnames'
-import { AreaHTMLAttributes, forwardRef } from 'react'
+import { AreaHTMLAttributes, forwardRef, ReactElement } from 'react'
+import SelectBtn from './select-btn'
+import SelectList, { SelectListProps } from './select-list'
 
-const SelectWrapp = forwardRef<
-    HTMLDivElement,
-    AreaHTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
-    const cl = classNames(className, 'relative')
-    return (
-        <div className={cl} {...props} ref={ref}>
-            {children}
-        </div>
-    )
-})
+export interface SelectWrappProps
+    extends Omit<AreaHTMLAttributes<HTMLDivElement>, 'children'> {
+    children: [ReactElement<typeof SelectBtn>, ReactElement<SelectListProps>]
+}
+
+const SelectWrapp = forwardRef<HTMLDivElement, SelectWrappProps>(
+    ({ className, children, ...props }, ref) => {
+        const cl = classNames(className, 'relative')
+        return (
+            <div className={cl} {...props} ref={ref}>
+                {children}
+            </div>
+        )
+    },
+)
 
 export default SelectWrapp

@@ -4,38 +4,20 @@ import {
     forwardRef,
     MouseEvent,
     useContext,
-    useEffect,
 } from 'react'
 import classNames from 'classnames'
 import { SelectContext } from './select'
 
-interface SelectOptionProps extends AreaHTMLAttributes<HTMLDivElement> {
+export interface SelectOptionProps extends AreaHTMLAttributes<HTMLDivElement> {
     value: string
     defult?: boolean
 }
 
 const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
-    ({ children, onClick, className, value, defult, ...props }, ref) => {
-        const { items, selected, setItems, setSelected } =
+    ({ children, onClick, className, value, ...props }, ref) => {
+        const { items, selected, setSelected } =
             useContext(SelectContext)
         const cl = classNames('w-full p-2', className)
-        useEffect(() => {
-            setItems((prev) => {
-                const res = items.find((el) => el.value === value)
-                if (res) return prev
-                return [...prev, { value, children, title: value }]
-            })
-        }, [children])
-        useEffect(() => {
-            if (defult && items.length !== 0) {
-                setSelected(
-                    items.findIndex(
-                        (el) => el && el.value && el.value === value,
-                    ),
-                )
-            }
-            console.log(items)
-        }, [items.length])
         const handelClick = (e: MouseEvent<HTMLDivElement>) => {
             const i = items.findIndex((el) => el.value === value)
             if (i === selected) return
