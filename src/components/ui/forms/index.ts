@@ -4,6 +4,7 @@ export { default as Legend } from './components/legend'
 export { default as Error } from './components/error'
 export { default as Input } from './fields/input'
 export { default as Textarea } from './fields/textarea'
+export { default as GeneratorContentForm } from './generator-content-form'
 import Form from './form'
 
 export default Form
