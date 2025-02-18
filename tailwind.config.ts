@@ -20,6 +20,9 @@ export default {
       },
       fontFamily: {
         body: ['var(--font-body)']
+      },
+      transitionProperty: {
+        visibility: 'visibility, opacity'
       }
     },
   },
