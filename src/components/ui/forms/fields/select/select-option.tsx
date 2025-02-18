@@ -21,9 +21,7 @@ const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
         const cl = classNames('w-full p-2', className)
         useEffect(() => {
             setItems((prev) => {
-                const res = items.find(
-                    (el) => el.value === value,
-                )
+                const res = items.find((el) => el.value === value)
                 if (res) return prev
                 return [...prev, { value, children, title: value }]
             })

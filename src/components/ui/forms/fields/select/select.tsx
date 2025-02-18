@@ -63,18 +63,18 @@ const Select = forwardRef<
                     setSelected,
                 }}
             >
-                           <select
-                value={getDefutlValue()}
-                {...props}
-                className="viseble-hidden"
-                ref={ref}
-            >
-                {items.map((el: Item) => (
-                    <option value={el.value} key={el.value}>
-                        {el.title}
-                    </option>
-                ))}
-            </select>
+                <select
+                    value={getDefutlValue()}
+                    {...props}
+                    className="viseble-hidden"
+                    ref={ref}
+                >
+                    {items.map((el: Item) => (
+                        <option value={el.value} key={el.value}>
+                            {el.title}
+                        </option>
+                    ))}
+                </select>
                 {children}
             </SelectContext.Provider>
         </>
