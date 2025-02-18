@@ -12,7 +12,8 @@ import ListBorder from '@/components/ui/list-border'
 import useUniteRef from '@/hooks/useUniteRef'
 import { SelectContext } from './select'
 import { createPortal } from 'react-dom'
-import SelectOption, { SelectOptionProps } from './select-option'
+import { SelectOptionProps } from './select-option'
+import useRender from '@/components/ui/hooks/useRender'
 
 export interface SelectListProps
     extends Omit<AreaHTMLAttributes<HTMLUListElement>, 'children'> {
@@ -23,15 +24,18 @@ const SelectList = forwardRef<HTMLUListElement, SelectListProps>(
     ({ children, className, ...props }, ref) => {
         const [translate, setTranslate] = useState<number>(0)
         const { isOpen, selected, refBtn } = useContext(SelectContext)
+        const { isRendern, isTransition, handelTransitionEnd } =
+            useRender(isOpen)
         const cl = classNames(
             className,
-            'absolute max-h-screen overflow-auto',
+            'absolute top-0 left-0 max-h-screen overflow-auto',
             'flex flex-col bg-white w-full',
             'bg-white border border-label rounded-bl-lg z-50',
-            'transition-visibility duration-300',
+            'duration-300',
             {
-                'opacity-0 invisible': !isOpen,
-                'opacity-100 visible': isOpen,
+                'opacity-0 invisible transition-visibility-transform':
+                    !isTransition,
+                'opacity-100 visible transition-visibility': isTransition,
             },
         )
 
@@ -59,11 +63,13 @@ const SelectList = forwardRef<HTMLUListElement, SelectListProps>(
             return () => {
                 setTranslate(0)
             }
-        }, [isOpen, selected])
+        }, [isRendern, selected, isOpen])
+        if (!isRendern) return
         return createPortal(
             <ListBorder
                 style={{ transform: `translateY(${translate * -1}px)` }}
                 className={cl}
+                onTransitionEnd={handelTransitionEnd}
                 ref={(node) => {
                     refList.current = node
                 }}

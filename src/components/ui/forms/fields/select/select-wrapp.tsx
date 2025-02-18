@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { AreaHTMLAttributes, forwardRef, ReactElement } from 'react'
 import SelectBtn from './select-btn'
-import SelectList, { SelectListProps } from './select-list'
+import { SelectListProps } from './select-list'
 
 export interface SelectWrappProps
     extends Omit<AreaHTMLAttributes<HTMLDivElement>, 'children'> {

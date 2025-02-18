@@ -13,7 +13,7 @@ import {
     useRef,
     useState,
 } from 'react'
-import SelectWrapp, { SelectWrappProps } from './select-wrapp'
+import { SelectWrappProps } from './select-wrapp'
 
 export interface SelectContextItems {
     refSelect: RefObject<HTMLSelectElement | null>
@@ -49,7 +49,7 @@ interface SelectProps
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
-    ({ children,  ...props }, ref) => {
+    ({ children, ...props }, ref) => {
         const [items, setItems] = useState<Item[]>([])
         const [selected, setSelected] = useState<number>(0)
         const [isOpen, setIsOpen] = useState<boolean>(false)
