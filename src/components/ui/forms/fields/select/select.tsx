@@ -4,12 +4,15 @@ import {
     Dispatch,
     forwardRef,
     ReactNode,
+    RefObject,
     SelectHTMLAttributes,
     SetStateAction,
+    useRef,
     useState,
 } from 'react'
 
 export interface SelectContextItems {
+    refBtn: RefObject<HTMLButtonElement | null>
     items: Item[]
     setItems: Dispatch<SetStateAction<Item[]>>
     isOpen: boolean
@@ -25,6 +28,7 @@ type Item = {
 }
 
 export const SelectContext = createContext<SelectContextItems>({
+    refBtn: { current: null },
     items: [],
     setItems: () => {},
     selected: 0,
@@ -40,7 +44,7 @@ const Select = forwardRef<
     const [items, setItems] = useState<Item[]>([])
     const [selected, setSelected] = useState<number>(0)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-
+    const refBtn = useRef<HTMLButtonElement>(null)
     const getDefutlValue = () => {
         if (items.length === 0) return
         if (value) return value
@@ -48,7 +52,18 @@ const Select = forwardRef<
     }
     return (
         <>
-            <select
+            <SelectContext.Provider
+                value={{
+                    refBtn,
+                    items,
+                    setItems,
+                    isOpen,
+                    setIsOpen,
+                    selected,
+                    setSelected,
+                }}
+            >
+                           <select
                 value={getDefutlValue()}
                 {...props}
                 className="viseble-hidden"
@@ -60,16 +75,6 @@ const Select = forwardRef<
                     </option>
                 ))}
             </select>
-            <SelectContext.Provider
-                value={{
-                    items,
-                    setItems,
-                    isOpen,
-                    setIsOpen,
-                    selected,
-                    setSelected,
-                }}
-            >
                 {children}
             </SelectContext.Provider>
         </>

@@ -1,3 +1,4 @@
+'use client'
 import classNames from 'classnames'
 import {
     ButtonHTMLAttributes,
@@ -5,6 +6,7 @@ import {
     forwardRef,
     MouseEvent,
     useContext,
+    useEffect,
 } from 'react'
 import { SelectContext } from './select'
 
@@ -12,7 +14,7 @@ const SelectBtn = forwardRef<
     HTMLButtonElement,
     ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, className, onClick, onBlur, ...props }, ref) => {
-    const { items, selected, setIsOpen } = useContext(SelectContext)
+    const { refBtn, items, selected, setIsOpen } = useContext(SelectContext)
     const cl = classNames(
         className,
         'h-[33px] text-left w-full border-l border-b border-black rounded-bl-lg pl-2 pb-2',
@@ -32,6 +34,14 @@ const SelectBtn = forwardRef<
         if (items.length === 0) return children
         return items[selected].children
     }
+    useEffect(() => {
+        if (typeof ref === 'function') {
+            ref(refBtn.current)
+        }
+        if (typeof ref === 'object') {
+            ref = refBtn
+        }
+    }, [refBtn.current])
     return (
         <button
             type="button"
@@ -39,7 +49,7 @@ const SelectBtn = forwardRef<
             onBlur={handelBlur}
             className={cl}
             {...props}
-            ref={ref}
+            ref={refBtn}
         >
             {getContent()}
         </button>

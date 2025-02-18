@@ -10,19 +10,20 @@ import classNames from 'classnames'
 import ListBorder from '@/components/ui/list-border'
 import useUniteRef from '@/hooks/useUniteRef'
 import { SelectContext } from './select'
+import { createPortal } from 'react-dom'
 
 const SelectList = forwardRef<
     HTMLUListElement,
     AreaHTMLAttributes<HTMLUListElement>
 >(({ children, className, ...props }, ref) => {
     const [translate, setTranslate] = useState<number>(0)
-    const { isOpen, selected } = useContext(SelectContext)
+    const { isOpen, selected, refBtn } = useContext(SelectContext)
     const cl = classNames(
         className,
-        'absolute top-0 left-0 max-h-screen overflow-auto',
+        'absolute max-h-screen overflow-auto',
         'flex flex-col bg-white w-full',
-        'border border-label rounded-bl-lg',
-        'transition-[transform, visibility, opacity] duration-300',
+        'bg-white border border-label rounded-bl-lg z-50',
+        'transition-visibility duration-300',
         {
             'opacity-0 invisible': !isOpen,
             'opacity-100 visible': isOpen,
@@ -30,28 +31,31 @@ const SelectList = forwardRef<
     )
 
     const refList = useUniteRef<HTMLUListElement>(ref)
-
     useEffect(() => {
-        if (!refList.current) return
-        const item = refList.current.children[selected] as HTMLLIElement
+        if (!refList.current || !refBtn.current) return
+        const corBtn = refBtn.current.getBoundingClientRect()
+        refList.current.style.width = refBtn.current.clientWidth + 'px'
+        refList.current.style.top = corBtn.top + 'px'
+        refList.current.style.left = corBtn.left + 'px'
         const corList = refList.current.getBoundingClientRect()
+        const item = refList.current.children[selected] as HTMLLIElement
         let t = item.offsetTop + 8
-        if (corList.y + translate - t < 0 && t > translate) {
-            console.log('top')
-            t = translate + corList.y
+        if (corBtn.y - t < 0 && t > translate) {
+            t = corBtn.y
         }
         if (
-            translate + corList.y + corList.height - t > window.innerHeight &&
+            corBtn.y + corList.height - t > window.innerHeight &&
             t <= translate
         ) {
-            t = translate + corList.y - (window.innerHeight - corList.height)
+            t = corBtn.y - (window.innerHeight - corList.height)
         }
         setTranslate(() => t)
+
         return () => {
             setTranslate(0)
         }
-    }, [selected, refList.current])
-    return (
+    }, [isOpen, selected])
+    return createPortal(
         <ListBorder
             style={{ transform: `translateY(${translate * -1}px)` }}
             className={cl}
@@ -61,7 +65,8 @@ const SelectList = forwardRef<
             {...props}
         >
             {children}
-        </ListBorder>
+        </ListBorder>,
+        document.body,
     )
 })
 

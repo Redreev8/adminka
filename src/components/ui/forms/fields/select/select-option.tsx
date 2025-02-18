@@ -20,8 +20,14 @@ const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
             useContext(SelectContext)
         const cl = classNames('w-full p-2', className)
         useEffect(() => {
-            setItems((prev) => [...prev, { value, children, title: value }])
-        }, [])
+            setItems((prev) => {
+                const res = items.find(
+                    (el) => el.value === value,
+                )
+                if (res) return prev
+                return [...prev, { value, children, title: value }]
+            })
+        }, [children])
         useEffect(() => {
             if (defult && items.length !== 0) {
                 setSelected(
@@ -30,7 +36,8 @@ const SelectOption = forwardRef<HTMLDivElement, SelectOptionProps>(
                     ),
                 )
             }
-        }, [items])
+            console.log(items)
+        }, [items.length])
         const handelClick = (e: MouseEvent<HTMLDivElement>) => {
             const i = items.findIndex((el) => el.value === value)
             if (i === selected) return
