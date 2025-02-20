@@ -1,4 +1,3 @@
-import { TableDesc } from '@/actions/tables/dto/table'
 import {
     Accordion,
     AccordionTitle,
@@ -7,10 +6,11 @@ import {
 import { Fieldset, Input, Label, Legend, Textarea } from '@/components/ui/forms'
 import { FC, FieldsetHTMLAttributes } from 'react'
 import { UseFormRegister } from 'react-hook-form'
+import { CreateTableField } from './form-create-table'
 
 interface FieldsetCreateTableDescProps
     extends FieldsetHTMLAttributes<HTMLFieldSetElement> {
-    register: UseFormRegister<TableDesc>
+    register: UseFormRegister<CreateTableField>
 }
 
 const FieldsetCreateTableDesc: FC<FieldsetCreateTableDescProps> = ({

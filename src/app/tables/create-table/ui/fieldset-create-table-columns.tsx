@@ -1,20 +1,155 @@
-import { TableDesc } from '@/actions/tables/dto/table'
-import { Fieldset, Legend } from '@/components/ui/forms'
+import {
+    Accordion,
+    AccordionContent,
+    AccordionTitle,
+    AccordionList,
+} from '@/components/ui/accordion'
+import { Error, Fieldset, Input, Label, Legend } from '@/components/ui/forms'
+import {
+    Select,
+    SelectBtn,
+    SelectList,
+    SelectOption,
+    SelectWrapp,
+} from '@/components/ui/forms/fields/select'
 import { FC, FieldsetHTMLAttributes } from 'react'
-import { UseFormRegister } from 'react-hook-form'
+import {
+    FieldErrors,
+    UseFieldArrayReturn,
+    UseFormRegister,
+    UseFormWatch,
+} from 'react-hook-form'
+import { CreateTableField } from './form-create-table'
+import Btn from '@/components/ui/btn'
+import GeneratorContentForm from '@/components/ui/forms/generator-content-form'
+import classNames from 'classnames'
+import {
+    defultField,
+    defultType,
+    fieldsType,
+    selectTypes,
+} from '@/actions/tables/types'
+import {
+    required,
+    nameSql,
+} from '@/components/ui/forms/components/error/type-eror'
+import getErrorArr from '@/helper/get-error-arr'
 
 interface FieldsetCreateTableColumnsProps
     extends FieldsetHTMLAttributes<HTMLFieldSetElement> {
-    register: UseFormRegister<TableDesc>
+    register: UseFormRegister<CreateTableField>
+    arrColmsField: UseFieldArrayReturn<CreateTableField, 'columns-fields', 'id'>
+    errors: FieldErrors<CreateTableField>
+    watch: UseFormWatch<CreateTableField>
 }
+
+const FormClumn = GeneratorContentForm<CreateTableField>
 
 const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
     register,
+    arrColmsField,
+    className,
+    errors,
+    watch,
     ...props
 }) => {
+    const { fields, append, remove } = arrColmsField
+    const watchFieldArray = watch('columns-fields')
+    const controlledFields = fields.map((field, index) => {
+        return {
+            ...field,
+            ...watchFieldArray[index],
+        }
+    })
     return (
-        <Fieldset className="flex flex-col gap-4" {...props}>
+        <Fieldset
+            className={classNames('flex flex-col items-end gap-4', className)}
+            {...props}
+        >
             <Legend>Columns</Legend>
+            <AccordionList className="w-full">
+                {controlledFields.map((field, i) => (
+                    <Accordion key={field.id}>
+                        <div className="flex items-end gap-4">
+                            <Label className="w-full">
+                                <span>
+                                    <span>Name </span>
+                                    <Error
+                                        error={getErrorArr(
+                                            errors,
+                                            'columns-fields',
+                                            i,
+                                            'name',
+                                        )}
+                                    />
+                                </span>
+                                <Input
+                                    {...register(`columns-fields.${i}.name`, {
+                                        required,
+                                        pattern: nameSql,
+                                    })}
+                                />
+                            </Label>
+                            <Label className="w-full">
+                                <span>
+                                    <span>Type </span>
+                                </span>
+                                <Select
+                                    {...register(`columns-fields.${i}.type`)}
+                                >
+                                    <SelectWrapp>
+                                        <SelectBtn />
+                                        <SelectList>
+                                            {selectTypes.map((t) => (
+                                                <SelectOption
+                                                    defult={
+                                                        t.value ===
+                                                        (field.type ??
+                                                            defultType)
+                                                    }
+                                                    value={t.value}
+                                                    key={t.value}
+                                                >
+                                                    {t.children}
+                                                </SelectOption>
+                                            ))}
+                                        </SelectList>
+                                    </SelectWrapp>
+                                </Select>
+                            </Label>
+                            <div className="flex w-full justify-end gap-4">
+                                <AccordionTitle>
+                                    <Btn isOutline>открыть</Btn>
+                                </AccordionTitle>
+                                <Btn
+                                    onClick={() => remove(i)}
+                                    isOutline
+                                    iconLeft="TrashIcon"
+                                />
+                            </div>
+                        </div>
+                        <AccordionContent>
+                            <div className="pb-6 pt-4">
+                                <FormClumn
+                                    fields={fieldsType[
+                                        field && field.type
+                                            ? field.type
+                                            : defultType
+                                    ](`columns-fields.${i}`)}
+                                    register={register}
+                                />
+                            </div>
+                        </AccordionContent>
+                    </Accordion>
+                ))}
+            </AccordionList>
+            <Btn
+                onClick={() => append({ ...defultField[defultType] })}
+                isOutline
+                iconLeft="AddSquareIcon"
+            >
+                Add column
+            </Btn>
         </Fieldset>
     )
 }

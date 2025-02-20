@@ -22,6 +22,7 @@ export default {
         body: ['var(--font-body)']
       },
       transitionProperty: {
+        'visibility-transform': 'visibility, opacity, transform',
         visibility: 'visibility, opacity'
       }
     },
