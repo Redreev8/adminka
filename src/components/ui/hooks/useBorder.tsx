@@ -6,6 +6,7 @@ export const getBorderChildren = <T extends HTMLElement>(
     box: T,
     classNames: string[] = [],
 ) => {
+    if (!box) return
     const childrens = box.children
     if (!childrens || childrens.length === 0) return
     for (let i = 0; i < childrens.length; i++) {

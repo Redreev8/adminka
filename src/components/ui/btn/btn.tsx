@@ -84,6 +84,7 @@ const Btn = forwardRef<HTMLAnchorElement | HTMLButtonElement, BtnProps>(
         }
         return (
             <button
+                type="button"
                 className={cl}
                 {...props}
                 ref={ref as ForwardedRef<HTMLButtonElement>}

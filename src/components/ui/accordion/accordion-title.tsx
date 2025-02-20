@@ -22,7 +22,7 @@ const AccordionTitle: FC<AccordionTitleProps> = ({
 }) => {
     const { isOpen, toggle } = useContext(AccordionContext)
     const { onClick, className, ...props } = children.props
-    const cl = classNames(className, 'cursor-pointer w-full')
+    const cl = classNames(className, 'cursor-pointer')
     const handelClick = (e: Event) => {
         if (onClick) onClick(e)
         toggle()

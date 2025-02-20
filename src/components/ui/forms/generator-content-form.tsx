@@ -1,3 +1,4 @@
+'use client'
 import { FieldValues, UseFormRegister, Path } from 'react-hook-form'
 import Fieldset from './components/fieldset'
 import Legend from './components/legend'
@@ -10,9 +11,10 @@ import {
     SelectWrapp,
     SelectOption,
 } from './fields/select'
+import { ReactNode, useEffect, useState } from 'react'
 
 interface InputTool<T> {
-    name: keyof T
+    name: Path<T>
     component: 'input'
     label: string
     defaultValue?: string
@@ -20,7 +22,7 @@ interface InputTool<T> {
 }
 
 interface InputNumberTool<T> {
-    name: keyof T
+    name: Path<T>
     component: 'input-number'
     label: string
     defaultValue?: string
@@ -30,7 +32,7 @@ interface InputNumberTool<T> {
 }
 
 interface SelectTool<T> {
-    name: keyof T
+    name: Path<T>
     component: 'select'
     label: string
     btn: string
@@ -50,19 +52,18 @@ interface FieldsetTool<T> {
     content: Field<T>[]
 }
 
-type Components<T> = FieldsetTool<T> | Field<T>
+export type Components<T> = FieldsetTool<T> | Field<T>
 
 export interface GeneratorContentFormProps<T extends FieldValues> {
     fields: Components<T>[]
     register: UseFormRegister<T>
-    prev?: string
 }
 
 const GeneratorContentForm = <T extends FieldValues>({
     register,
     fields,
-    prev = '',
 }: GeneratorContentFormProps<T>) => {
+    const [children, setChildren] = useState<ReactNode>()
     const getFields = (field: Components<T>, i: number) => {
         if (field.component === 'fieldset') {
             return (
@@ -73,12 +74,11 @@ const GeneratorContentForm = <T extends FieldValues>({
             )
         }
         const { component, label, name, ...props } = field
-        const namePrev = (prev ? `${prev}.${name as Path<T>}` : name) as Path<T>
         if (component === 'input') {
             return (
                 <Label key={i}>
                     <span>{label}</span>
-                    <Input {...register(namePrev)} type="text" {...props} />
+                    <Input {...register(name)} type="text" {...props} />
                 </Label>
             )
         }
@@ -86,7 +86,7 @@ const GeneratorContentForm = <T extends FieldValues>({
             return (
                 <Label key={i}>
                     <span>{label}</span>
-                    <Input {...register(namePrev)} type="number" {...props} />
+                    <Input {...register(name)} type="number" {...props} />
                 </Label>
             )
         }
@@ -95,13 +95,12 @@ const GeneratorContentForm = <T extends FieldValues>({
             return (
                 <Label key={i}>
                     <span>{label}</span>
-                    <Select {...register(namePrev)}>
+                    <Select {...register(name as Path<T>)}>
                         <SelectWrapp>
                             <SelectBtn>{btn}</SelectBtn>
                             <SelectList>
-                                {options.map((el, i) => (
+                                {options.map((el) => (
                                     <SelectOption
-                                        defult={i === 6}
                                         value={el.value}
                                         key={el.value}
                                     >
@@ -117,7 +116,10 @@ const GeneratorContentForm = <T extends FieldValues>({
 
         return
     }
-    return <>{fields.map(getFields)}</>
+    useEffect(() => {
+        setChildren(fields.map(getFields))
+    }, [fields])
+    return children
 }
 
 export default GeneratorContentForm
