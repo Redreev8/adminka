@@ -10,6 +10,7 @@ import {
     SelectHTMLAttributes,
     SetStateAction,
     useEffect,
+    useLayoutEffect,
     useRef,
     useState,
 } from 'react'
@@ -57,30 +58,35 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         const refSelect = useUniteRef(ref)
         useEffect(() => {
             const options = children.props.children[1].props.children
-            let selected = 0
+            let s = selected
             const res: Item[] = []
             for (let i = 0; i < options.length; i++) {
                 const { props } = options[i]
+                console.log(props)
                 res.push({
                     value: props.value,
                     children: props.children,
                     title: props.value,
                 })
-                if (props.defult) selected = i
+                if (props.defult) s = i
             }
             setItems(() => {
-                setSelected(() => selected)
+                setSelected(() => s)
                 return res
             })
         }, [])
+        useLayoutEffect(() => {
+            if (!refSelect.current) return
+            refSelect.current.value = items[selected]?.value
+            refSelect.current.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                }),
+            )
+        }, [selected])
         return (
             <>
-                <select
-                    ref={refSelect}
-                    className="viseble-hidden"
-                    {...props}
-                    value={items[selected]?.value}
-                >
+                <select {...props} className="viseble-hidden" ref={refSelect}>
                     {items.map((el: Item) => (
                         <option value={el.value} key={el.value}>
                             {el.title}

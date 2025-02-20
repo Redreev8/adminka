@@ -44,19 +44,23 @@ const SelectList = forwardRef<HTMLUListElement, SelectListProps>(
             if (!refList.current || !refBtn.current) return
             const corBtn = refBtn.current.getBoundingClientRect()
             refList.current.style.width = refBtn.current.clientWidth + 'px'
-            refList.current.style.top = corBtn.top + 'px'
+            refList.current.style.top = corBtn.top + window.scrollY + 'px'
             refList.current.style.left = corBtn.left + 'px'
             const corList = refList.current.getBoundingClientRect()
             const item = refList.current.children[selected] as HTMLLIElement
             let t = item.offsetTop + 8
-            if (corBtn.y - t < 0 && t > translate) {
-                t = corBtn.y
+            if (corBtn.top + window.scrollY - t < 0 && t > translate) {
+                t = corBtn.top + window.scrollY
             }
             if (
-                corBtn.y + corList.height - t > window.innerHeight &&
+                corBtn.top + window.scrollY + corList.height - t >
+                    window.innerHeight &&
                 t <= translate
             ) {
-                t = corBtn.y - (window.innerHeight - corList.height)
+                t =
+                    corBtn.top +
+                    window.scrollY -
+                    (window.innerHeight - corList.height)
             }
             setTranslate(() => t)
 
