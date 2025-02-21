@@ -70,7 +70,7 @@ const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
             <AccordionList className="w-full">
                 {controlledFields.map((field, i) => (
                     <Accordion key={field.id}>
-                        <div className="flex items-end gap-4">
+                        <div className="flex items-end gap-4 pb-4 pt-1">
                             <Label className="w-full">
                                 <span>
                                     <span>Name </span>

@@ -1,6 +1,6 @@
 'use client'
 import positionChildToParent from '@/helper/position-child-to-parent'
-import { RefObject, useLayoutEffect } from 'react'
+import { ReactNode, RefObject, useLayoutEffect } from 'react'
 
 export const getBorderChildren = <T extends HTMLElement>(
     box: T,
@@ -31,6 +31,7 @@ export const getBorderChildren = <T extends HTMLElement>(
 const useBorder = <T extends HTMLElement>(
     boxRef: RefObject<T | null>,
     classNames: string[] = [],
+    children: ReactNode,
 ) => {
     useLayoutEffect(() => {
         if (boxRef.current) {
@@ -48,7 +49,7 @@ const useBorder = <T extends HTMLElement>(
                 )
             }
         }
-    }, [])
+    }, [children])
 }
 
 export default useBorder

@@ -3,7 +3,8 @@ import SectionTable from './ui/section-table'
 
 const Tables = async () => {
     const tables = await findTableDesc()
-    if (!Array.isArray(tables)) return Error
+
+    if (!Array.isArray(tables)) return <div></div>
 
     return <SectionTable tables={tables} />
 }

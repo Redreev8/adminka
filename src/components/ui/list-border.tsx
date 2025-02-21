@@ -14,7 +14,7 @@ const ListBorder = forwardRef<HTMLUListElement, ListBorder>(
     ({ className, children, classNameItem, ...props }, ref) => {
         const refList = useUniteRef<HTMLUListElement>(ref)
         const cl = classNames(delPClassName(className), 'p-0')
-        useBorder(refList, classNameItem)
+        useBorder(refList, classNameItem, children)
 
         return (
             <ul className={cl} {...props} ref={refList}>
