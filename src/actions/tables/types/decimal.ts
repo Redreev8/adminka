@@ -40,5 +40,5 @@ export const createDecimal = ({
     precision = 10,
     scale = 2,
 }: Decimal): ReturnCreateColumn => {
-    return { row: `${name} DECIMAL(${precision}, ${scale})` }
+    return { col: `${name} DECIMAL(${precision}, ${scale})` }
 }

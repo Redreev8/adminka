@@ -64,8 +64,8 @@ const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
         value: t.name,
         children: t.desc.name,
     })
-    const { tables, error, pending } = useFindTablesOptions<TableOption[]>(
-        (table) => table.map(getTableOptons)
+    const { tables, error, pending } = useFindTablesOptions<TableOption>(
+        (table) => table.map(getTableOptons),
     )
     const { fields, append, remove } = arrColmsField
     const watchFieldArray = watch('columns-fields')

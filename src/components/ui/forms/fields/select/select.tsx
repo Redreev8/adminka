@@ -77,9 +77,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         }, [])
         useLayoutEffect(() => {
             if (!refSelect.current) return
-            console.log(refSelect.current.value)
             refSelect.current.value = items[selected]?.value
-            console.log(refSelect.current.value)
             refSelect.current.dispatchEvent(
                 new Event('change', {
                     bubbles: true,

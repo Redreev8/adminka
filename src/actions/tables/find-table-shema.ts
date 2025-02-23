@@ -1,3 +1,4 @@
+'use server'
 import db from '@/actions/db'
 import dtoTablesShema, { TableShema } from './dto/table-shema'
 

@@ -10,6 +10,7 @@ import {
     nameSql,
     required,
 } from '@/components/ui/forms/components/error/type-eror'
+import createTable from '@/actions/tables/create-table'
 
 export interface CreateTableField extends TableDesc {
     'columns-fields': Types[]
@@ -27,19 +28,16 @@ const FormCreateTable = () => {
         control,
         name: 'columns-fields',
     })
+    const postCreateTable = handleSubmit(async (data) => {
+        const res = await createTable(data)
+        console.log(res)
+    })
 
     return (
-        <Form
-            onSubmit={handleSubmit((data) => {
-                console.log(data)
-                alert(JSON.stringify(data, null, 4))
-            })}
-            className="flex flex-col gap-6"
-        >
+        <Form onSubmit={postCreateTable} className="flex flex-col gap-6">
             <Label>
                 <span>Name table</span>
                 <Input
-                    value={2}
                     {...register('name', {
                         required,
                         pattern: nameSql,

@@ -1,13 +1,47 @@
+import { ReturnCreateColumn } from './_type'
 import {
     Connections,
+    createConnections,
     fieldDefultConnections,
     fieldsConnections,
 } from './connections'
-import { Decimal, fieldDefultDecimal, fieldsDecimal } from './decimal'
-import { fieldDefultInt, fieldsInt, INT } from './int'
-import { fieldDefultVarchar, fieldsVarchar, Varchar } from './varchar'
+import {
+    createDecimal,
+    Decimal,
+    fieldDefultDecimal,
+    fieldsDecimal,
+} from './decimal'
+import { createInt, fieldDefultInt, fieldsInt, INT } from './int'
+import {
+    createVarchar,
+    fieldDefultVarchar,
+    fieldsVarchar,
+    Varchar,
+} from './varchar'
 
 export type Types = Varchar | INT | Decimal | Connections
+export type T = Varchar & INT & Decimal & Connections
+
+export interface TypesObj {
+    decimal: Decimal
+    int: INT
+    varchar: Varchar
+    connections: Connections
+}
+
+interface a {
+    decimal: (d: Decimal) => ReturnCreateColumn
+    int: (d: INT) => ReturnCreateColumn
+    varchar: (d: Varchar) => ReturnCreateColumn
+    connections: (d: Connections) => ReturnCreateColumn
+}
+
+export const createColumn: a = {
+    decimal: createDecimal,
+    int: createInt,
+    varchar: createVarchar,
+    connections: createConnections,
+}
 
 export const fieldsType = {
     decimal: fieldsDecimal,

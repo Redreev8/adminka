@@ -51,12 +51,12 @@ export const createConnections = ({
     typeConnection,
     nameConnection,
 }: Connections): ReturnCreateColumn => {
-    const res = { row: '' }
+    const res = { col: '' }
     // if (typeConnection === 'One-to-One') {
-    //     return `${nameConnection}_id INTEGER REFERENCES ${nameConnection}s(id)`
+    //     return `${nameConnection}_id INTEGER REFERENCES ${nameConnection}(id)`
     // }
     if (typeConnection === 'One-to-Many') {
-        res.row = `${nameConnection}_id INTEGER REFERENCES ${nameConnection}s(id)`
+        res.col = `${nameConnection}_id INTEGER REFERENCES ${nameConnection}(id)`
     }
     return res
 }

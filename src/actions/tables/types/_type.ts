@@ -10,5 +10,5 @@ export interface Field {
 }
 
 export interface ReturnCreateColumn {
-    row: string
+    col: string
 }

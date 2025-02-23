@@ -34,5 +34,5 @@ export const createVarchar = ({
     name,
     max = 255,
 }: PartialKey<Varchar, 'max'>): ReturnCreateColumn => {
-    return { row: `${name} VARCHAR(${max})` }
+    return { col: `${name} VARCHAR(${max})` }
 }

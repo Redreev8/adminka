@@ -21,5 +21,5 @@ export const fieldsInt = <T extends FieldValues>(
 ]
 
 export const createInt = ({ name }: INT): ReturnCreateColumn => {
-    return { row: `${name} INTEGER` }
+    return { col: `${name} INTEGER` }
 }
