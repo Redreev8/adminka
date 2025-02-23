@@ -30,13 +30,14 @@ const FormCreateTable = () => {
 
     return (
         <Form
-            onSubmit={handleSubmit((data) =>
-                alert(JSON.stringify(data, null, 4)),
-            )}
+            onSubmit={handleSubmit((data) => {
+                console.log(data)
+                alert(JSON.stringify(data, null, 4))
+            })}
             className="flex flex-col gap-6"
         >
             <Label>
-                <span>Название таблицы</span>
+                <span>Name table</span>
                 <Input
                     value={2}
                     {...register('name', {

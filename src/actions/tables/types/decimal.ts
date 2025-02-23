@@ -1,5 +1,5 @@
 import { Components } from '@/components/ui/forms/generator-content-form'
-import { Field, Row } from './_type'
+import { Field, ReturnCreateColumn, Row } from './_type'
 import { FieldValues, Path } from 'react-hook-form'
 
 export interface Decimal extends Row, Field {
@@ -35,10 +35,10 @@ export const fieldsDecimal = <T extends FieldValues>(
     },
 ]
 
-export const createDecimal = (
-    name: string,
-    precision: number = 10,
-    scale: number = 2,
-) => {
-    return `${name} DECIMAL(${precision}, ${scale})`
+export const createDecimal = ({
+    name,
+    precision = 10,
+    scale = 2,
+}: Decimal): ReturnCreateColumn => {
+    return { row: `${name} DECIMAL(${precision}, ${scale})` }
 }

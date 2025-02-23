@@ -34,6 +34,8 @@ import {
     nameSql,
 } from '@/components/ui/forms/components/error/type-eror'
 import getErrorArr from '@/helper/get-error-arr'
+import useFindTablesOptions from '../../hooks/use-find-tables-options'
+import { TableDesc } from '@/actions/tables/dto/table'
 
 interface FieldsetCreateTableColumnsProps
     extends FieldsetHTMLAttributes<HTMLFieldSetElement> {
@@ -45,6 +47,11 @@ interface FieldsetCreateTableColumnsProps
 
 const FormClumn = GeneratorContentForm<CreateTableField>
 
+interface TableOption {
+    value: string
+    children: string
+}
+
 const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
     register,
     arrColmsField,
@@ -53,6 +60,13 @@ const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
     watch,
     ...props
 }) => {
+    const getTableOptons = (t: TableDesc): TableOption => ({
+        value: t.name,
+        children: t.desc.name,
+    })
+    const { tables, error, pending } = useFindTablesOptions<TableOption[]>(
+        (table) => table.map(getTableOptons)
+    )
     const { fields, append, remove } = arrColmsField
     const watchFieldArray = watch('columns-fields')
     const controlledFields = fields.map((field, index) => {
@@ -61,6 +75,8 @@ const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
             ...watchFieldArray[index],
         }
     })
+    if (!pending) return
+    if (error) return <div>error</div>
     return (
         <Fieldset
             className={classNames('flex flex-col items-end gap-4', className)}
@@ -135,7 +151,7 @@ const FieldsetCreateTableColumns: FC<FieldsetCreateTableColumnsProps> = ({
                                         field && field.type
                                             ? field.type
                                             : defultType
-                                    ](`columns-fields.${i}`)}
+                                    ](`columns-fields.${i}`, tables)}
                                     register={register}
                                 />
                             </div>

@@ -8,3 +8,7 @@ export interface Row {
 export interface Field {
     label: string
 }
+
+export interface ReturnCreateColumn {
+    row: string
+}

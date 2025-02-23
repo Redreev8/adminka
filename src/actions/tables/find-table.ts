@@ -1,3 +1,4 @@
+'use server'
 import db from '@/actions/db'
 import dtoTablesDesc, { TableDesc } from './dto/table'
 
