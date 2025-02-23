@@ -58,11 +58,11 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         const refSelect = useUniteRef(ref)
         useEffect(() => {
             const options = children.props.children[1].props.children
+            if (!options) return
             let s = selected
             const res: Item[] = []
             for (let i = 0; i < options.length; i++) {
                 const { props } = options[i]
-                console.log(props)
                 res.push({
                     value: props.value,
                     children: props.children,
@@ -77,13 +77,15 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         }, [])
         useLayoutEffect(() => {
             if (!refSelect.current) return
+            console.log(refSelect.current.value)
             refSelect.current.value = items[selected]?.value
+            console.log(refSelect.current.value)
             refSelect.current.dispatchEvent(
                 new Event('change', {
                     bubbles: true,
                 }),
             )
-        }, [selected])
+        }, [items, selected])
         return (
             <>
                 <select {...props} className="viseble-hidden" ref={refSelect}>
