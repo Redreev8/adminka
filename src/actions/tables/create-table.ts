@@ -8,7 +8,7 @@ interface createTableProps extends TableDesc {
 }
 const createTable = async (
     data: createTableProps,
-): Promise<TableDesc | string> => {
+): Promise<undefined | string> => {
     try {
         const columns: string[] = []
 
@@ -18,15 +18,15 @@ const createTable = async (
             columns.push(res.col)
         }
         console.log(columns.join(','))
-        const res = await db.query(`
+        await db.query(`
             CREATE TABLE ${data.name}(
                 id SERIAL PRIMARY KEY,
                 ${columns.join(',')}
             );
         `)
-        return res.rows
-    } catch(e) {
-        return e
+        return
+    } catch {
+        return 'error'
     }
 }
 
