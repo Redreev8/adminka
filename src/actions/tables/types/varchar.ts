@@ -1,5 +1,5 @@
 import { Components } from '@/components/ui/forms/generator-content-form'
-import { Field, ReturnCreateColumn, Row } from './_type'
+import { Field, PropsCreate, ReturnCreateColumn, Row } from './_type'
 import { FieldValues, Path } from 'react-hook-form'
 import PartialKey from '@/helper/ts/partial-key'
 
@@ -33,6 +33,9 @@ export const fieldsVarchar = <T extends FieldValues>(
 export const createVarchar = ({
     name,
     max = 255,
-}: PartialKey<Varchar, 'max'>): ReturnCreateColumn => {
-    return { col: `${name} VARCHAR(${max})` }
+}: PartialKey<Varchar, 'max'> & PropsCreate): ReturnCreateColumn => {
+    return {
+        col: `${name} VARCHAR(${max})`,
+        before: '',
+    }
 }

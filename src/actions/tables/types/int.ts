@@ -1,5 +1,5 @@
 import { Components } from '@/components/ui/forms/generator-content-form'
-import { Field, ReturnCreateColumn, Row } from './_type'
+import { Field, PropsCreate, ReturnCreateColumn, Row } from './_type'
 import { FieldValues, Path } from 'react-hook-form'
 
 export interface INT extends Row, Field {}
@@ -20,6 +20,9 @@ export const fieldsInt = <T extends FieldValues>(
     },
 ]
 
-export const createInt = ({ name }: INT): ReturnCreateColumn => {
-    return { col: `${name} INTEGER` }
+export const createInt = ({ name }: INT & PropsCreate): ReturnCreateColumn => {
+    return {
+        col: `${name} INTEGER`,
+        before: '',
+    }
 }

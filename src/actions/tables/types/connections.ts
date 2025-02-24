@@ -1,15 +1,20 @@
 import { Components } from '@/components/ui/forms/generator-content-form'
-import { Field, ReturnCreateColumn, Row } from './_type'
+import { Field, PropsCreate, ReturnCreateColumn, Row } from './_type'
 import { FieldValues, Path } from 'react-hook-form'
 
 export interface Connections extends Row, Field {
     nameConnection: string
-    typeConnection: 'One-to-Many' | 'Many-to-One'
+    nameColumnManyToMany?: string
+    nameColumnConnection: string
+    nameColumn: string
+    typeConnection: 'Many-to-Many' | 'One-to-Many' | 'One-to-One'
 }
 
 export const fieldDefultConnections: Connections = {
     name: '',
     nameConnection: '',
+    nameColumnConnection: 'id',
+    nameColumn: 'id',
     type: 'connections',
     typeConnection: 'One-to-Many',
     label: '',
@@ -48,15 +53,28 @@ export const fieldsConnections = <T extends FieldValues>(
 }
 
 export const createConnections = ({
+    name,
+    nameTable,
+    nameColumn,
+    nameColumnConnection = 'id',
+    nameColumnManyToMany = nameColumnConnection,
     typeConnection,
     nameConnection,
-}: Connections): ReturnCreateColumn => {
-    const res = { col: '' }
-    // if (typeConnection === 'One-to-One') {
-    //     return `${nameConnection}_id INTEGER REFERENCES ${nameConnection}(id)`
-    // }
+}: Connections & PropsCreate): ReturnCreateColumn => {
+    const res = { col: '', before: '' }
+    if (typeConnection === 'One-to-One') {
+        res.col = `${name} INTEGER UNIQUE REFERENCES ${nameConnection}(${nameColumnConnection})`
+    }
     if (typeConnection === 'One-to-Many') {
-        res.col = `${nameConnection}_id INTEGER REFERENCES ${nameConnection}(id)`
+        res.col = `${name} INTEGER REFERENCES ${nameConnection}(${nameColumnConnection})`
+        console.log(res.col)
+    }
+    if (typeConnection === 'Many-to-Many') {
+        res.before = `CREATE TABLE ${nameConnection}_${name} (
+            ${nameColumnManyToMany} INTEGER REFERENCES ${nameConnection}(${nameColumnConnection}),
+            ${name} INTEGER REFERENCES ${nameTable}(${nameColumn}),
+            PRIMARY KEY (${nameConnection}, ${name})
+        );`
     }
     return res
 }

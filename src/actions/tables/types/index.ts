@@ -1,4 +1,3 @@
-import { ReturnCreateColumn } from './_type'
 import {
     Connections,
     createConnections,
@@ -29,14 +28,7 @@ export interface TypesObj {
     connections: Connections
 }
 
-interface a {
-    decimal: (d: Decimal) => ReturnCreateColumn
-    int: (d: INT) => ReturnCreateColumn
-    varchar: (d: Varchar) => ReturnCreateColumn
-    connections: (d: Connections) => ReturnCreateColumn
-}
-
-export const createColumn: a = {
+export const createColumn = {
     decimal: createDecimal,
     int: createInt,
     varchar: createVarchar,

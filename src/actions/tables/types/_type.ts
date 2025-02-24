@@ -9,6 +9,11 @@ export interface Field {
     label: string
 }
 
+export interface PropsCreate {
+    nameTable: string
+}
+
 export interface ReturnCreateColumn {
+    before: string
     col: string
 }
