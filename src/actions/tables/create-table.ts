@@ -3,12 +3,19 @@ import db from '@/actions/db'
 import { TableDesc } from './dto/table'
 import { createColumn, T, Types } from './types'
 
-interface createTableProps extends TableDesc {
+export interface ColumnsCreate extends TableDesc {
     'columns-fields': Types[]
 }
-const createTable = async (
-    data: createTableProps,
-): Promise<undefined | string> => {
+
+interface createTableProps {
+    data: ColumnsCreate
+    isId?: boolean
+}
+
+const createTable = async ({
+    data,
+    isId = false,
+}: createTableProps): Promise<undefined | string> => {
     try {
         const columns: string[] = []
 
@@ -20,7 +27,7 @@ const createTable = async (
         console.log(columns.join(','))
         await db.query(`
             CREATE TABLE ${data.name}(
-                id SERIAL PRIMARY KEY,
+                ${isId ? 'id SERIAL PRIMARY KEY,' : ''}
                 ${columns.join(',')}
             );
         `)
