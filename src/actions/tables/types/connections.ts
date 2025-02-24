@@ -17,7 +17,10 @@ export const fieldDefultConnections: Connections = {
     nameColumn: 'id',
     type: 'connections',
     typeConnection: 'One-to-Many',
-    label: '',
+    desc: {
+        name: '',
+        desc: '',
+    },
 }
 
 export const fieldsConnections = <T extends FieldValues>(
@@ -26,8 +29,13 @@ export const fieldsConnections = <T extends FieldValues>(
 ): Components<T>[] => {
     return [
         {
-            name: `${name}.label` as Path<T>,
+            name: `${name}.desc.name` as Path<T>,
             label: 'label',
+            component: 'input',
+        },
+        {
+            name: `${name}.desc.desc` as Path<T>,
+            label: 'Descripton',
             component: 'input',
         },
         {
@@ -67,7 +75,7 @@ export const fieldsConnections = <T extends FieldValues>(
 export const createConnections = ({
     name,
     nameTable,
-    nameColumn,
+    nameColumn = 'id',
     nameColumnConnection = 'id',
     nameColumnManyToMany = nameColumnConnection,
     typeConnection,

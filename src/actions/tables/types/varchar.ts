@@ -11,7 +11,10 @@ export interface Varchar extends Row, Field {
 export const fieldDefultVarchar: Varchar = {
     name: '',
     type: 'varchar',
-    label: '',
+    desc: {
+        name: '',
+        desc: '',
+    },
     max: 255,
 }
 
@@ -19,8 +22,13 @@ export const fieldsVarchar = <T extends FieldValues>(
     name: Path<T>,
 ): Components<T>[] => [
     {
-        name: `${name}.label` as Path<T>,
+        name: `${name}.desc.name` as Path<T>,
         label: 'label',
+        component: 'input',
+    },
+    {
+        name: `${name}.desc.desc` as Path<T>,
+        label: 'Descripton',
         component: 'input',
     },
     {

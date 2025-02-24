@@ -10,7 +10,10 @@ export interface Decimal extends Row, Field {
 export const fieldDefultDecimal: Decimal = {
     name: '',
     type: 'decimal',
-    label: '',
+    desc: {
+        name: '',
+        desc: '',
+    },
     precision: 10,
     scale: 2,
 }
@@ -19,8 +22,13 @@ export const fieldsDecimal = <T extends FieldValues>(
     name: Path<T>,
 ): Components<T>[] => [
     {
-        name: `${name}.label` as Path<T>,
+        name: `${name}.desc.name` as Path<T>,
         label: 'label',
+        component: 'input',
+    },
+    {
+        name: `${name}.desc.desc` as Path<T>,
+        label: 'Descripton',
         component: 'input',
     },
     {

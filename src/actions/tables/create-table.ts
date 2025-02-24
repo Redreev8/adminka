@@ -19,6 +19,9 @@ const createTable = async ({
     try {
         const columns: string[] = []
         const before: string[] = []
+        const comments: string[] = [
+            `comment on table ${data.name} is '${JSON.stringify(data.desc)}';`,
+        ]
 
         for (let i = 0; i < data['columns-fields'].length; i++) {
             const el = data['columns-fields'][i] as T
@@ -26,6 +29,9 @@ const createTable = async ({
                 nameTable: data.name,
                 ...el,
             })
+            comments.push(
+                `comment on column ${data.name}.${el.name} is '${JSON.stringify(el.desc)}';`,
+            )
             columns.push(res.col)
             before.push(res.before)
         }
@@ -37,6 +43,7 @@ const createTable = async ({
             );
 
             ${before.join('\n\n')}
+            ${comments.join('')}
         `)
         return
     } catch {

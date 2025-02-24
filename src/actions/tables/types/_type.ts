@@ -6,7 +6,10 @@ export interface Row {
 }
 
 export interface Field {
-    label: string
+    desc: {
+        name: string
+        desc: string
+    }
 }
 
 export interface PropsCreate {
