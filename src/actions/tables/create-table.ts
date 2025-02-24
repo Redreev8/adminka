@@ -14,7 +14,7 @@ interface createTableProps {
 
 const createTable = async ({
     data,
-    isId = false,
+    isId = true,
 }: createTableProps): Promise<undefined | string> => {
     try {
         const columns: string[] = []
