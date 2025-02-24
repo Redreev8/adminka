@@ -67,7 +67,7 @@ const GeneratorContentForm = <T extends FieldValues>({
     const getFields = (field: Components<T>, i: number) => {
         if (field.component === 'fieldset') {
             return (
-                <Fieldset key={i}>
+                <Fieldset className="mt-5 pt-4" key={i}>
                     <Legend>{field.legend}</Legend>
                     {field.content.map(getFields)}
                 </Fieldset>

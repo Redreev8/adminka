@@ -31,23 +31,35 @@ export const fieldsConnections = <T extends FieldValues>(
             component: 'input',
         },
         {
-            name: `${name}.typeConnection` as Path<T>,
-            label: 'type connection',
-            component: 'select',
-            btn: 'type connection',
-            options: [
+            component: 'fieldset',
+            legend: 'table connection',
+            content: [
                 {
-                    value: 'One-to-Many',
-                    children: 'One-to-Many',
+                    name: `${name}.nameColumnConnection` as Path<T>,
+                    label: 'Column connection',
+                    defaultValue: 'id',
+                    component: 'input',
+                },
+                {
+                    name: `${name}.nameConnection` as Path<T>,
+                    label: 'names table',
+                    component: 'select',
+                    btn: 'names table',
+                    options: tables,
+                },
+                {
+                    name: `${name}.typeConnection` as Path<T>,
+                    label: 'type connection',
+                    component: 'select',
+                    btn: 'type connection',
+                    options: [
+                        {
+                            value: 'One-to-Many',
+                            children: 'One-to-Many',
+                        },
+                    ],
                 },
             ],
-        },
-        {
-            name: `${name}.nameConnection` as Path<T>,
-            label: 'names table',
-            component: 'select',
-            btn: 'names table',
-            options: tables,
         },
     ]
 }
