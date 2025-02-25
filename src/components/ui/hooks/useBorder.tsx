@@ -31,7 +31,7 @@ export const getBorderChildren = <T extends HTMLElement>(
 const useBorder = <T extends HTMLElement>(
     boxRef: RefObject<T | null>,
     classNames: string[] = [],
-    children: ReactNode,
+    children: ReactNode = [],
 ) => {
     useLayoutEffect(() => {
         if (boxRef.current) {
